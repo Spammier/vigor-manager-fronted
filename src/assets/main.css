@@ -1,0 +1,100 @@
+@import './base.css';
+
+/* Define CSS Variables for Dark Theme */
+:root {
+  --dark-bg-primary: #121212; /* Primary very dark background */
+  --dark-bg-secondary: #1e1e1e; /* Slightly lighter background for elements */
+  --dark-bg-card: #2a2f34; /* Card/Modal background */
+  --dark-bg-input: #343a40; /* Input/Select background */
+  --dark-bg-hover: #3a4045; /* Hover background */
+
+  --dark-border-primary: #495057; /* Primary border color */
+  --dark-border-secondary: #343a40; /* Secondary border, e.g., table header */
+
+  --dark-text-primary: #e9ecef; /* Primary light text */
+  --dark-text-secondary: #adb5bd; /* Secondary muted text */
+  --dark-text-placeholder: #6c757d; /* Placeholder text */
+
+  --accent-color: #198754; /* Accent color (green) */
+  --accent-color-hover: #157347; /* Accent color hover */
+  --danger-color: #dc3545; /* Danger color (red) */
+  --danger-color-hover: #bb2d3b; /* Danger color hover */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Microsoft YaHei", "微软雅黑", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden; /* Prevent body scroll, scrolling should happen within layout */
+  background-color: var(--dark-bg-primary);
+  color: var(--dark-text-primary);
+  font-size: 14px; /* Base font size */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  height: 100%;
+  width: 100%;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: var(--accent-color);
+  transition: color 0.3s ease, background-color 0.3s ease;
+  padding: 2px 4px; /* Add slight padding for hover background */
+  border-radius: 3px;
+}
+
+a:hover {
+  color: var(--accent-color-hover);
+  background-color: rgba(25, 135, 84, 0.1); /* Subtle hover background */
+}
+
+/* Remove the potentially problematic media query */
+/*
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    place-items: center;
+  }
+
+  #app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2rem;
+  }
+}
+*/
+
+/* Add some global element styling improvements */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--dark-text-primary);
+  font-weight: 600;
+}
+
+p {
+  color: var(--dark-text-secondary);
+  line-height: 1.6;
+}
+
+/* Element Plus Global Overrides (Optional, can be more specific later) */
+.el-button {
+  /* Add slight transition for smoother hover */
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}

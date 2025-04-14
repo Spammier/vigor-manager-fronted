@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- UFO底部光晕 -->
+  <ellipse cx="100" cy="150" rx="70" ry="20" fill="#E6F7FF" opacity="0.7" />
+  
+  <!-- UFO主体 -->
+  <ellipse cx="100" cy="100" rx="60" ry="25" fill="#2D8CF0" />
+  
+  <!-- UFO舱体 -->
+  <circle cx="100" cy="100" r="30" fill="#E6F7FF" />
+  <ellipse cx="100" cy="100" rx="40" ry="15" fill="#2D8CF0" stroke="#1F6ED4" stroke-width="2" />
+  
+  <!-- UFO上部 -->
+  <circle cx="100" cy="88" r="25" fill="#E6F7FF" opacity="0.9" />
+  
+  <!-- UFO窗口 -->
+  <circle cx="85" cy="100" r="5" fill="white" />
+  <circle cx="115" cy="100" r="5" fill="white" />
+  
+  <!-- 光线 -->
+  <path d="M70,110 L60,140 M85,115 L80,145 M100,120 L100,150 M115,115 L120,145 M130,110 L140,140" 
+       stroke="#E6F7FF" stroke-width="2" stroke-linecap="round" opacity="0.8" />
+</svg> 
