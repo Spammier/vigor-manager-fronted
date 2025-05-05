@@ -1,7 +1,10 @@
 <template>
   <div class="app-container">
     <header class="app-header dark-header">
-      <h1 class="app-title">精神小伙管理器</h1>
+      <div class="app-title-container">
+        <img src="@/assets/logo.png" alt="Logo" class="app-logo">
+        <h1 class="app-title">精神小伙管理器</h1>
+      </div>
       <div class="user-info">
         <span>{{ userName }}</span>
         <a href="javascript:;" @click="logout">退出登录</a>
@@ -125,6 +128,17 @@ onMounted(() => {
   color: var(--dark-text-primary);
   border-bottom: 1px solid var(--dark-border-primary);
   flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+.app-title-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between logo and title */
+}
+
+.app-logo {
+  height: 35px; /* Adjust size as needed */
+  width: auto;
 }
 
 .app-title {

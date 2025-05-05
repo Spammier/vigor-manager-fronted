@@ -135,6 +135,7 @@
       width="60%" 
       :close-on-click-modal="false"
       class="dark-dialog"
+      :key="dialogVisible"
     >
       <el-form :model="empForm" :rules="rules" ref="empFormRef" label-width="100px">
         <el-tabs v-model="activeTab" class="dark-tabs">
@@ -612,18 +613,22 @@ const formatDateTime = (dateTimeString) => {
 
 // 加载部门列表
 const loadDeptList = async () => {
+  console.log('开始加载部门列表...'); // 添加日志
   try {
     const res = await deptApi.getDeptList()
+    console.log('部门列表 API 响应:', res); // 添加日志，查看完整响应
     // 修改判断条件：只检查 code === 0
     if (res.code === 0) { 
-      deptList.value = res.data || [] // 确保 data 存在
+      deptList.value = res.data?.rows || [] // 确保 data.rows 存在
+      console.log('部门列表加载成功:', deptList.value); // 添加日志，查看赋值结果
     } else {
       // 只有在 code != 0 时才报错
+      console.error('部门列表 API 返回错误:', res.msg || '未知错误'); // 添加错误日志
       ElMessage.error(res.msg || '获取部门列表失败')
       deptList.value = [] // 清空
     }
   } catch (error) {
-    console.error('获取部门列表出错：', error)
+    console.error('获取部门列表网络或代码出错：', error)
     ElMessage.error('获取部门列表时发生网络错误，请稍后重试') // 修改错误提示
     deptList.value = [] // 清空
   }
@@ -954,8 +959,8 @@ const getExprFieldDisplayName = (field) => {
 
 // 组件挂载时加载数据
 onMounted(() => {
-  loadEmpList()
   loadDeptList()
+  loadEmpList()
 })
 </script>
 
@@ -987,7 +992,7 @@ onMounted(() => {
 }
 /* Style form labels within dark cards */
 .dark-card :deep(.el-form-item__label) {
-    color: #ced4da;
+    color: #adb5bd;
 }
 
 /* Dark Table Styles using :deep */
@@ -1013,10 +1018,10 @@ onMounted(() => {
     color: #adb5bd;
 }
 /* Style table selection background */
-.dark-table :deep(tr.selected-row > td) { 
+.dark-table :deep(tr.selected-row > td) {
   background-color: #3a4045 !important;
 }
-.dark-table :deep(.el-checkbox__inner) { 
+.dark-table :deep(.el-checkbox__inner) {
     background-color: #495057;
     border-color: #6c757d;
 }
@@ -1032,76 +1037,89 @@ onMounted(() => {
 /* Dark Input/Select/DatePicker Styles using :deep */
 .dark-theme :deep(.el-input__wrapper),
 .dark-theme :deep(.el-select__wrapper),
-.dark-theme :deep(.el-input-number) { 
-  background-color: #343a40;
+.dark-theme :deep(.el-input-number) {
+  background-color: #000000; /* Pure black background */
   box-shadow: none;
-  border: 1px solid #495057;
-  color: #e9ecef;
+  border: 1px solid #333333; /* Dark grey border */
+  color: #f0f0f0; /* Lighter text */
 }
 .dark-theme :deep(.el-input__wrapper.is-focus),
 .dark-theme :deep(.el-select__wrapper.is-focused),
 .dark-theme :deep(.el-input-number.is-focus .el-input__wrapper) {
-  border-color: #198754;
+  border-color: #198754 !important; /* Keep accent border */
+  background-color: #111111 !important; /* Slightly lighter black on focus */
 }
 .dark-theme :deep(.el-input__inner),
 .dark-theme :deep(.el-select__placeholder),
 .dark-theme :deep(.el-select__selected-item span) {
-  color: #e9ecef;
+  color: #f0f0f0; /* Lighter text */
 }
 .dark-theme :deep(.el-input__inner::placeholder) {
-  color: #6c757d;
+  color: #666666; /* Darker grey placeholder */
 }
 .dark-theme :deep(.el-select .el-input .el-select__caret),
 .dark-theme :deep(.el-input__icon),
 .dark-theme :deep(.el-input-number__decrease),
 .dark-theme :deep(.el-input-number__increase) {
-    color: #adb5bd;
+    color: #a0a0a0; /* Medium grey icons */
 }
 .dark-theme :deep(.el-date-editor .el-input__wrapper) {
-    background-color: #343a40;
-    border: 1px solid #495057;
+    background-color: #000000; /* Pure black */
+    border: 1px solid #333333; /* Dark grey border */
 }
 .dark-theme :deep(.el-date-editor .el-input__inner) {
-    color: #e9ecef;
+    color: #f0f0f0; /* Lighter text */
 }
 .dark-theme :deep(.el-date-editor .el-range-input::placeholder),
 .dark-theme :deep(.el-date-editor .el-range-separator) {
-    color: #6c757d;
+    color: #666666; /* Darker grey placeholder */
 }
 
 /* Dark Dialog Styles using :deep */
+/* Remove the rules for .dark-dialog :deep(.el-dialog) and :deep(.el-overlay-dialog) from here */
+/*
+.dark-dialog :deep(.el-dialog) { 
+    background-color: #000000 !important; 
+}
+:deep(.el-overlay-dialog) { 
+  background-color: rgba(0, 0, 0, 0.85) !important; 
+}
+*/
 .dark-dialog .el-dialog__header {
-  background-color: #2a2f34; 
+  background-color: #000000 !important; /* Force pure black */
   margin-right: 0;
+  border-bottom: 1px solid #333333 !important; /* Dark grey border */
 }
 .dark-dialog .el-dialog__title {
-    color: #e9ecef;
+    color: #f0f0f0 !important; /* Lighter title */
 }
 .dark-dialog .el-dialog__headerbtn .el-dialog__close {
-    color: #ced4da;
+    color: #a0a0a0 !important; /* Medium grey */
 }
 .dark-dialog .el-dialog__headerbtn .el-dialog__close:hover {
-    color: #198754;
+    color: #198754 !important;
 }
 .dark-dialog .el-dialog__body {
-  background-color: #212529;
-  color: #ced4da;
+  background-color: #000000 !important; /* Force pure black */
+  color: #f0f0f0 !important; /* Lighter default text */
 }
 .dark-dialog .el-dialog__footer {
-  background-color: #212529;
-  border-top: 1px solid #495057;
+  background-color: #000000 !important; /* Force pure black */
+  border-top: 1px solid #333333 !important; /* Dark grey border */
 }
 /* Style form labels within dialog */
 .dark-dialog :deep(.el-form-item__label) {
-    color: #ced4da;
+    color: #a0a0a0 !important; /* Medium grey label */
 }
 
 /* Dark Tabs Styles using :deep */
 .dark-tabs :deep(.el-tabs__header) {
-    border-bottom: 1px solid #495057;
+    border-bottom: 1px solid #333333 !important; /* Dark grey border */
+    background-color: #000000 !important; /* Force pure black */
+    margin: 0 !important; 
 }
 .dark-tabs :deep(.el-tabs__item) {
-    color: #adb5bd;
+    color: #a0a0a0 !important; /* Medium grey */
 }
 .dark-tabs :deep(.el-tabs__item.is-active) {
     color: #198754;
@@ -1110,22 +1128,22 @@ onMounted(() => {
     background-color: #198754;
 }
 .dark-tabs :deep(.el-tabs__nav-wrap::after) {
-    background-color: #495057;
+    background-color: #333333 !important; /* Dark grey border */
 }
 
 /* Dark Upload Styles */
 .dark-theme :deep(.el-upload--picture-card), /* Adjust if using picture-card */
-.dark-theme :deep(.avatar-uploader .el-upload) { 
-    background-color: #343a40;
-    border: 1px dashed #495057;
-    color: #6c757d;
+.dark-theme :deep(.avatar-uploader .el-upload) {
+    background-color: #000000; /* Pure black */
+    border: 1px dashed #333333; /* Dark grey border */
+    color: #666666; /* Darker grey icon */
 }
 .dark-theme :deep(.avatar-uploader .el-upload:hover) {
     border-color: #198754;
     color: #198754;
 }
 .dark-theme .upload-tip {
-    color: #adb5bd;
+    color: #a0a0a0; /* Medium grey */
 }
 
 /* Dark Pagination Styles using :deep */
@@ -1145,8 +1163,8 @@ onMounted(() => {
 .dark-theme .pagination-container :deep(.el-pagination__jump) {
     color: #adb5bd;
 }
-.dark-theme .pagination-container :deep(.el-input__wrapper) { 
-    background-color: #343a40; 
+.dark-theme .pagination-container :deep(.el-input__wrapper) {
+    background-color: #343a40;
     border-color: #495057;
 }
 
@@ -1191,6 +1209,23 @@ onMounted(() => {
     color: #bb2d3b;
 }
 
+/* --- ADD Rules to make form inputs inside dialog darker --- */
+.dark-dialog :deep(.el-form .el-input__wrapper),
+.dark-dialog :deep(.el-form .el-select__wrapper),
+.dark-dialog :deep(.el-form .el-input-number .el-input__wrapper),
+.dark-dialog :deep(.el-form .el-date-editor .el-input__wrapper) {
+    background-color: #000000 !important; /* Pure black */
+    border-color: #333333 !important; /* Dark grey border */
+    color: #f0f0f0 !important; /* Ensure text color is light */
+}
+/* Make focus background slightly lighter black, rely on border */
+.dark-dialog :deep(.el-form .el-input__wrapper.is-focus),
+.dark-dialog :deep(.el-form .el-select__wrapper.is-focused),
+.dark-dialog :deep(.el-form .el-input-number.is-focus .el-input__wrapper) {
+    border-color: #198754 !important; /* Keep accent border on focus */
+    background-color: #111111 !important; /* Slightly lighter black focus bg */
+}
+/* --- END of rules for pure black inputs --- */
 
 /* --- Original Styles (Keep for reference/fallback) --- */
 .employee-management-container {
@@ -1245,8 +1280,10 @@ onMounted(() => {
 .experience-item {
   margin-bottom: 15px;
   padding: 15px;
-  border: 1px solid #ebeef5;
+  border: 1px solid #ebeef5; /* Keep original border for light theme? */
   border-radius: 4px;
+  /* Add dark theme border */
+  border-color: #495057;
 }
 
 .add-experience {
@@ -1268,7 +1305,7 @@ onMounted(() => {
 
 .selection-info {
   margin-left: 15px;
-  color: #606266;
+  color: #adb5bd; /* Updated color for dark theme */
 }
 
 .table-tools {
@@ -1283,7 +1320,7 @@ onMounted(() => {
 }
 
 .avatar-uploader {
-  border: 1px dashed #d9d9d9;
+  /* border: 1px dashed #d9d9d9; - Use dark theme border */
   border-radius: 6px;
   cursor: pointer;
   position: relative;
@@ -1294,15 +1331,20 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   flex-shrink: 0; /* 防止容器收缩 */
+  /* Use dark theme border/bg */
+  border: 1px dashed #495057;
+  background-color: #343a40;
 }
 
 .avatar-uploader:hover {
-  border-color: #409EFF;
+  /* border-color: #409EFF; - Use dark theme hover */
+  border-color: #198754;
 }
 
 .avatar-uploader-icon {
   font-size: 28px;
-  color: #8c939d;
+  /* color: #8c939d; - Use dark theme color */
+  color: #6c757d;
   width: 178px;
   height: 178px;
   display: flex;
@@ -1322,7 +1364,8 @@ onMounted(() => {
 }
 
 .upload-tip {
-  color: #606266;
+  /* color: #606266; - Use dark theme color */
+  color: #adb5bd;
   font-size: 13px;
   line-height: 1.5;
 }
@@ -1337,12 +1380,15 @@ onMounted(() => {
   align-items: center;
   margin-bottom: 12px;
   padding: 10px 15px;
-  background-color: #ffeded;
+  /* background-color: #ffeded; - Use dark theme error bg */
+  background-color: rgba(220, 53, 69, 0.2); /* Example dark error bg */
+  border: 1px solid #dc3545;
+  color: #f8d7da; /* Example dark error text */
   border-radius: 4px;
 }
 
 .error-icon {
-  color: #F56C6C;
+  color: #dc3545; /* Use danger color variable */
   margin-right: 8px;
   font-size: 16px;
 }

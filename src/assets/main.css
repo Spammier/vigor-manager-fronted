@@ -98,3 +98,14 @@ p {
   /* Add slight transition for smoother hover */
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
+
+/* Force Dark Dialog Background and Overlay - ADDED */
+.el-overlay-dialog {
+  background-color: rgba(0, 0, 0, 0.85) !important; /* Dark overlay */
+}
+
+.dark-dialog.el-dialog, /* More specific selector */
+.el-dialog.dark-dialog { /* Alternative for specificity */
+    background-color: #000000 !important; /* Pure black dialog background */
+}
+/* --- End of Added Styles --- */

@@ -1,6 +1,9 @@
 <template>
   <div class="login-container">
-    <h1 class="page-title">精神小伙管理器</h1>
+    <div class="page-title-container">
+      <img src="@/assets/logo.png" alt="Logo" class="page-logo">
+      <h1 class="page-title">精神小伙管理器</h1>
+    </div>
     
     <div class="login-card">
       <div class="login-form-container">
@@ -60,6 +63,7 @@ import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { User, Lock } from '@element-plus/icons-vue'
 import request from '@/utils/request'
+import logoUrl from '@/assets/logo.png' // We don't actually need to use this variable if using src="@/assets/logo.png"
 
 const router = useRouter()
 const loginFormRef = ref(null)
@@ -151,14 +155,30 @@ const resetForm = () => {
 
 <style scoped>
 /* Use CSS Variables defined in main.css */
-.page-title {
+.page-title-container {
   position: absolute;
   top: 40px;
   left: 50px;
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Space between logo and title */
+  z-index: 10;
+}
+
+.page-logo {
+  height: 40px; /* Adjust size as needed */
+  width: auto;
+}
+
+.page-title {
+  /* Remove absolute positioning, handled by container */
+  position: static;
   color: var(--dark-text-primary); /* Use variable */
   font-size: 28px;
   font-weight: 600;
-  z-index: 10;
+  /* Remove z-index, handled by container */
+  /* z-index: 10; */
+  margin: 0; /* Remove default margin */
 }
 
 .login-container {

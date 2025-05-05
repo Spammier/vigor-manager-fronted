@@ -185,14 +185,14 @@ onMounted(() => {
   border: 1px solid var(--dark-border-primary);
 }
 
-.welcome-section h1 {
+.welcome-section h1.welcome-title {
   font-size: 2.2em; /* Adjust size */
-  margin-bottom: 15px;
+  margin-bottom: 15px; /* Restore original margin */
   color: var(--dark-text-primary);
   font-weight: 600;
 }
 
-.welcome-section p {
+.welcome-section p.welcome-subtitle {
   font-size: 1.1em;
   color: var(--dark-text-secondary);
 }
